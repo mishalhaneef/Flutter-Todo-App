@@ -1,6 +1,8 @@
 import 'package:bloc_change_text/core/constants.dart';
 import 'package:flutter/material.dart';
 
+import '../application/bloc_exports.dart';
+
 class Greetings extends StatelessWidget {
   const Greetings({
     Key? key,
@@ -18,12 +20,14 @@ class Greetings extends StatelessWidget {
         children: [
           Text(greetingText, style: Constants.headingTextStyle),
           const SizedBox(height: 10),
-          const Text(
-            '1 of 2 Task Completed',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.grey,
-            ),
+           BlocBuilder<TaskBloc, TaskState>(
+            builder: (context, state) {
+              return Text(
+                '${state.allTasks.length} Task',
+                style:
+                    TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
+              );
+            },
           ),
         ],
       ),

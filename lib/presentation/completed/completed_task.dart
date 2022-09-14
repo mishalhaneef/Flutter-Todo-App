@@ -1,8 +1,9 @@
-
-import 'package:bloc_change_text/domain/models/todos_model.dart';
-import 'package:bloc_change_text/presentation/home/widgets/todo_card.dart';
+import 'package:bloc_change_text/presentation/home/widgets/task_list.dart';
+import 'package:bloc_change_text/presentation/home/widgets/task_tile.dart';
 import 'package:bloc_change_text/widgets/greetings.dart';
 import 'package:flutter/cupertino.dart';
+
+import '../home/homepage.dart';
 
 class CompletedTask extends StatelessWidget {
   const CompletedTask({Key? key}) : super(key: key);
@@ -12,16 +13,16 @@ class CompletedTask extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Greetings(greetingText: 'Completed :D'),
-         ListView.builder(
-          shrinkWrap: true,
-          itemCount: 1,
-          itemBuilder: (context, index) {
-            return todoCard(
-                todo: Todo.todos[index],
-                isChecked: Todo.todos[index].isCompleted);
-          },
-        )
+        const Greetings(greetingText: 'Completed :D'),
+        // ListView.builder(
+        //   physics: const BouncingScrollPhysics(),
+        //   shrinkWrap: true,
+        //   itemCount: 1,
+        //   itemBuilder: (context, index) {
+        //     // return todoCard(todo: todos[index], isChecked: todos[index].isDone);
+        //     return TaskList();
+        //   },
+        // )
       ],
     );
   }

@@ -1,5 +1,5 @@
 import 'package:bloc_change_text/core/constants.dart';
-import 'package:bloc_change_text/presentation/add_todo_screen.dart';
+import 'package:bloc_change_text/presentation/home/add_todo_screen.dart';
 import 'package:bloc_change_text/presentation/completed/completed_task.dart';
 import 'package:bloc_change_text/presentation/favourite/fav_todo.dart';
 import 'package:bloc_change_text/presentation/home/homepage.dart';
@@ -13,7 +13,13 @@ class RootScreen extends StatelessWidget {
   const RootScreen({Key? key}) : super(key: key);
   static ValueNotifier<int> selectedIndexNotifier = ValueNotifier(0);
   static ValueNotifier<bool> switchNotifier = ValueNotifier(true);
-  final _pages = const [HomePage(), CompletedTask(), FavouriteTodo()];
+  final _pages = const [
+    HomePage(),
+    CompletedTask(),
+    FavouriteTodo(),
+  ];
+
+  static const id = 'home_screen';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +31,7 @@ class RootScreen extends StatelessWidget {
       // app's drawer
       drawer: const DrawerWidget(),
       backgroundColor: Colors.white,
-      // root body 
+      // root body
       body: ValueListenableBuilder(
         valueListenable: selectedIndexNotifier,
         builder: (BuildContext context, int updatedIndex, _) {

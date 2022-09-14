@@ -10,10 +10,7 @@ class DoItLogoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: const [
-        Text(
-          'DO ',
-          style: TextStyle(fontSize: 25),
-        ),
+        Text('DO ', style: TextStyle(fontSize: 25)),
         Text(
           'IT',
           style: TextStyle(

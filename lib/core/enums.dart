@@ -1,0 +1,1 @@
+enum ActionButtonType { add, cancel }
