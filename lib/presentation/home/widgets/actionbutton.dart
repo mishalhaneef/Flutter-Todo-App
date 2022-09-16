@@ -11,9 +11,11 @@ class ActionButton extends StatelessWidget {
   const ActionButton({
     Key? key,
     required this.type,
+    required this.color,
   }) : super(key: key);
 
   final ActionButtonType type;
+  final Color color;
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -29,8 +31,8 @@ class ActionButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         )),
         backgroundColor: type == ActionButtonType.cancel
-            ? MaterialStateProperty.all<Color>(Constants.cancelButtonColor)
-            : MaterialStateProperty.all<Color>(Constants.addButtonColor),
+            ? MaterialStateProperty.all<Color>(color)
+            : MaterialStateProperty.all<Color>(color),
       ),
       child: Text(type == ActionButtonType.add ? 'Add' : 'Cancel'),
     );
@@ -40,7 +42,8 @@ class ActionButton extends StatelessWidget {
 addTask(BuildContext context) {
   Task task = Task(
     title: titleController.text,
-    id: GUIDGen.generate()
+    description: descriptionController.text,
+    id: GUIDGen.generate(),
   );
   // the event class wiill trigger when this code run. and this code
   // will run when the add button pressed with the required contents

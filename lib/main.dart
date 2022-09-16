@@ -1,3 +1,5 @@
+import 'package:bloc_change_text/core/enums.dart';
+import 'package:bloc_change_text/infrastructure/app_theme.dart';
 import 'package:bloc_change_text/infrastructure/routers.dart';
 import 'package:bloc_change_text/root_screen.dart';
 import 'package:flutter/material.dart';
@@ -35,17 +37,24 @@ class MyApp extends StatelessWidget {
   final AppRouters routers;
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => TaskBloc(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Bloc ToDos',
-        theme: ThemeData(
-          fontFamily: 'Helvatica',
-          primarySwatch: Colors.blue,
-        ),
-        home: const RootScreen(),
-        onGenerateRoute: routers.onGenerateRoute,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => TaskBloc()),
+        BlocProvider(create: (context) => SwitchBloc()),
+      ],
+      child: BlocBuilder<SwitchBloc, SwitchState>(
+        builder: (context, state) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Todo',
+            theme: state.switchValue
+                ? AppThemes.appThemeData[AppTheme.darkTheme]
+                : AppThemes.appThemeData[AppTheme.lightTheme],
+                
+            home: const RootScreen(),
+            onGenerateRoute: routers.onGenerateRoute,
+          );
+        },
       ),
     );
   }

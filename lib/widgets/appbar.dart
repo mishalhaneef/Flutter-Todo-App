@@ -1,6 +1,8 @@
 import 'package:bloc_change_text/presentation/home/add_todo_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../application/bloc_exports.dart';
+
 class AppBarWidget extends StatelessWidget {
   const AppBarWidget({
     Key? key,
@@ -8,19 +10,26 @@ class AppBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      actions: [
-        IconButton(
-          onPressed: () {
-            showAddTodoPopup(context);
-          },
-          icon: const Icon(Icons.add),
-        ),
-        const SizedBox(width: 20)
-      ],
-      iconTheme: const IconThemeData(color: Colors.black),
-      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      elevation: 0,
+    return BlocBuilder<SwitchBloc, SwitchState>(
+      builder: (context, state) {
+        return AppBar(
+          actions: [
+            IconButton(
+              onPressed: () {
+                showAddTodoPopup(context);
+              },
+              icon: const Icon(Icons.add),
+            ),
+            const SizedBox(width: 20)
+          ],
+          iconTheme: IconThemeData(
+            color: state.switchValue 
+            ? const Color(0xFF6A7097) 
+            : Colors.black,
+          ),
+          elevation: 0,
+        );
+      },
     );
   }
 }

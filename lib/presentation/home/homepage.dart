@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
     return BlocBuilder<TaskBloc, TaskState>(
       builder: (context, state) {
         // list of task object from bloc's state that emitted
-        List<Task> taskList = state.allTasks;
+        List<Task> taskList = state.pendingTasks;
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

@@ -1,6 +1,9 @@
+import 'package:bloc_change_text/core/constants.dart';
 import 'package:bloc_change_text/domain/models/tasks.dart';
 import 'package:bloc_change_text/presentation/home/widgets/task_tile.dart';
 import 'package:flutter/material.dart';
+
+import '../../../application/bloc_exports.dart';
 
 class TaskList extends StatelessWidget {
   const TaskList({
@@ -17,12 +20,11 @@ class TaskList extends StatelessWidget {
         shrinkWrap: true,
         itemCount: taskList.length,
         itemBuilder: (context, index) {
-          return taskTile(
+          return TaskTile(
             task: taskList[index],
             isChecked: taskList[index].isDone,
-            context: context,
+            taskList: taskList,
           );
-          // return Expanded(child: TaskList());
         },
       ),
     );

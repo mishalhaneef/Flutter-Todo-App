@@ -1,8 +1,7 @@
-import 'package:bloc/bloc.dart';
 import 'package:bloc_change_text/application/bloc_exports.dart';
 import 'package:bloc_change_text/domain/models/tasks.dart';
 import 'package:equatable/equatable.dart';
-
+import 'package:flutter/cupertino.dart';
 part 'task_event.dart';
 part 'task_state.dart';
 
@@ -18,7 +17,15 @@ class TaskBloc extends HydratedBloc<TaskEvent, TaskState> {
     final state = this.state;
     emit(
       TaskState(
-        allTasks: List.from(state.allTasks)..add(event.task),
+        /// adding the data from user to the existing list from the bloc
+        /// state class. here that is [TaskState]
+        pendingTasks: List.from(state.pendingTasks)..add(event.task),
+        completedTasks: state.completedTasks,
+        favouriteTasks: state.favouriteTasks,
+        // keeping the removed task as same
+        ///* this data is keeping here cos when the event triggered the state will rebuild
+        ///* so the removed task will be empty cos there will be nothing in this state
+        ///* if this line of code isn't add
         removedTasks: state.removedTasks,
       ),
     );
@@ -28,16 +35,25 @@ class TaskBloc extends HydratedBloc<TaskEvent, TaskState> {
     final state = this.state;
     final task = event.task;
 
-    final int index = state.allTasks.indexOf(task);
-
-    List<Task> allTasks = List.from(state.allTasks)..remove(task);
+    List<Task> pendingTasks = state.pendingTasks;
+    List<Task> completedTasks = state.completedTasks;
 
     task.isDone == false
-        ? allTasks.insert(index, task.copyWith(isDone: true))
-        : allTasks.insert(index, task.copyWith(isDone: false));
+        ? {
+            pendingTasks = List.from(pendingTasks)..remove(task),
+            completedTasks = List.from(completedTasks)
+              ..insert(0, task.copyWith(isDone: true)),
+          }
+        : {
+            completedTasks = List.from(completedTasks)..remove(task),
+            pendingTasks = List.from(pendingTasks)
+              ..insert(0, task.copyWith(isDone: false)),
+          };
 
     emit(TaskState(
-      allTasks: allTasks,
+      pendingTasks: pendingTasks,
+      completedTasks: completedTasks,
+      favouriteTasks: state.favouriteTasks,
       removedTasks: state.removedTasks,
     ));
   }
@@ -46,22 +62,38 @@ class TaskBloc extends HydratedBloc<TaskEvent, TaskState> {
     final state = this.state;
     emit(
       TaskState(
-        allTasks: state.allTasks,
-        removedTasks: List.from(state.removedTasks)..remove(event.task)
-      ),
+          pendingTasks: state.pendingTasks,
+          completedTasks: state.completedTasks,
+          favouriteTasks: state.favouriteTasks,
+          removedTasks: List.from(state.removedTasks)..remove(event.task)),
     );
   }
 
   void _onRemoveTask(RemoveTask event, Emitter<TaskState> emit) {
     final state = this.state;
+
     emit(
       TaskState(
-        allTasks: List.from(state.allTasks)..remove(event.task),
+        pendingTasks: List.from(state.pendingTasks)..remove(event.task),
+        completedTasks: List.from(state.completedTasks)..remove(event.task),
+        favouriteTasks: List.from(state.favouriteTasks)..remove(event.task),
         removedTasks: List.from(state.removedTasks)
           ..add(event.task.copyWith(isDeleted: true)),
       ),
     );
   }
+
+  // void _onAddToFavouriteTask(
+  //     AddToFavouriteTask event, Emitter<TaskState> emit) {
+  //   final state = this.state;
+
+  //   emit(TaskState(
+  //     pendingTasks: state.pendingTasks,
+  //     completedTasks: state.completedTasks,
+  //     favouriteTasks: List.from(state.favouriteTasks)..insert(0, event.task),
+  //     removedTasks: state.removedTasks,
+  //   ));
+  // }
 
   @override
   TaskState? fromJson(Map<String, dynamic> json) {

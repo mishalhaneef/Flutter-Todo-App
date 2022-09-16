@@ -1,5 +1,5 @@
 import 'package:bloc_change_text/root_screen.dart';
-import 'package:bloc_change_text/widgets/bin.dart';
+import 'package:bloc_change_text/presentation/bin.dart';
 import 'package:flutter/material.dart';
 
 class AppRouters {

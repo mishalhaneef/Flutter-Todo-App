@@ -26,11 +26,11 @@ class RootScreen extends StatelessWidget {
       // common appbar widget
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(60),
-        child: AppBarWidget(),
+        child: AppBarWidget()
       ),
       // app's drawer
       drawer: const DrawerWidget(),
-      backgroundColor: Colors.white,
+      
       // root body
       body: ValueListenableBuilder(
         valueListenable: selectedIndexNotifier,
@@ -43,7 +43,7 @@ class RootScreen extends StatelessWidget {
         onPressed: () {
           showAddTodoPopup(context);
         },
-        backgroundColor: Constants.appThemeColor,
+        
         child: const Icon(Icons.add),
       ),
       // bottom nav bar button

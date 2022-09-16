@@ -15,21 +15,28 @@ class Greetings extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(right: 18, left: 18, top: 35, bottom: 60),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(greetingText, style: Constants.headingTextStyle),
-          const SizedBox(height: 10),
-           BlocBuilder<TaskBloc, TaskState>(
-            builder: (context, state) {
-              return Text(
-                '${state.allTasks.length} Task',
-                style:
-                    TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
-              );
-            },
-          ),
-        ],
+      child: BlocBuilder<SwitchBloc, SwitchState>(
+        builder: (context, switchStateRoot) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(greetingText, style: Constants.headingTextStyle),
+              const SizedBox(height: 10),
+              BlocBuilder<TaskBloc, TaskState>(
+                builder: (context, state) {
+                  return Text(
+                    '${state.completedTasks.length} of ${state.pendingTasks.length + state.completedTasks.length} task completed',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: switchStateRoot.switchValue
+                            ? const Color(0xFF7F859A)
+                            : Colors.grey),
+                  );
+                },
+              ),
+            ],
+          );
+        },
       ),
     );
   }

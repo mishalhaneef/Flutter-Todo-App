@@ -13,7 +13,6 @@ class Bin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(60),
         child: AppBarWidget(),
@@ -43,16 +42,7 @@ class Bin extends StatelessWidget {
           ),
           BlocBuilder<TaskBloc, TaskState>(
             builder: (context, state) {
-              return ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: 1,
-                itemBuilder: (context, index) {
-                  return TaskList(
-                    taskList: state.removedTasks,
-                  );
-                },
-              );
+              return TaskList(taskList: state.removedTasks);
             },
           )
         ],
