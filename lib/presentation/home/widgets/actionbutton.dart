@@ -1,5 +1,6 @@
 import 'package:bloc_change_text/core/constants.dart';
 import 'package:bloc_change_text/core/global.dart';
+import 'package:bloc_change_text/infrastructure/day_fetch.dart';
 import 'package:bloc_change_text/infrastructure/guid_gen.dart';
 import 'package:flutter/material.dart';
 
@@ -40,9 +41,13 @@ class ActionButton extends StatelessWidget {
 }
 
 addTask(BuildContext context) {
+  final day = fetchToday();
+  final time = fetchTime();
   Task task = Task(
     title: titleController.text,
     description: descriptionController.text,
+    day: day ,
+    time: time,
     id: GUIDGen.generate(),
   );
   // the event class wiill trigger when this code run. and this code

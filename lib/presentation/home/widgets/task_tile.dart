@@ -37,7 +37,12 @@ class TaskTile extends StatelessWidget {
                       : Colors.grey,
                 )),
             child: ExpansionTile(
-              tilePadding: const EdgeInsets.all(5),
+              tilePadding: const EdgeInsets.only(
+                left: 5,
+                right: 20,
+                top: 5,
+                bottom: 5,
+              ),
               leading: BlocBuilder<SwitchBloc, SwitchState>(
                 builder: (context, state) {
                   return Checkbox(
@@ -80,7 +85,7 @@ class TaskTile extends StatelessWidget {
                           : Colors.black,
                 ),
               ),
-              subtitle: Text('Monday | 10:17 pm',
+              subtitle: Text('${task.day} | ${task.time}',
                   // '${todo.day} | ${todo.time}',
                   style: TextStyle(
                     fontSize: 13,
@@ -104,50 +109,94 @@ class TaskTile extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 60),
                   child: ListTile(
-                    title: const Text('Task'),
-                    subtitle: Text(task.description),
+                    title: const Text('Description'),
+                    subtitle: Text(
+                      task.description.isEmpty
+                          ? 'No Description given'
+                          : task.description,
+                      style: TextStyle(
+                        color: task.description.isEmpty
+                            ? const Color.fromARGB(255, 209, 209, 209)
+                            : null,
+                      ),
+                    ),
                   ),
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                      icon: Icon(
-                        Icons.edit,
-                        size: 20,
-                        color: state.switchValue
-                            ? Constants.addButtonColorDark
-                            : Colors.grey,
+                if (task.isDeleted == true)
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        tooltip: 'Recover',
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.replay,
+                          color: state.switchValue
+                              ? Constants.addButtonColorDark
+                              : Colors.grey,
+                        ),
                       ),
-                      onPressed: () {},
-                    ),
-                    //
-                    IconButton(
-                      icon: Icon(
-                        Icons.bookmark,
-                        size: 20,
-                        color: state.switchValue
-                            ? Constants.addButtonColorDark
-                            : Colors.grey,
+                      //
+                     IconButton(
+                       tooltip: 'Delete Forever',
+                        icon: Icon(
+                          Icons.delete,
+                          size: 20,
+                          color: state.switchValue
+                              ? Constants.addButtonColorDark
+                              : Colors.grey,
+                        ),
+                        onPressed: () {
+                          removeOrDeleteTask(context, task);
+                        },
                       ),
-                      onPressed: () {},
-                    ),
-                    //
-                    IconButton(
-                      icon: Icon(
-                        Icons.delete,
-                        size: 20,
-                        color: state.switchValue
-                            ? Constants.addButtonColorDark
-                            : Colors.grey,
+                    ],
+                  ),
+                if (task.isDeleted == false)
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                         tooltip: 'edit todo',
+                        icon: Icon(
+                          Icons.edit,
+                          size: 20,
+                          color: state.switchValue
+                              ? Constants.addButtonColorDark
+                              : Colors.grey,
+                        ),
+                        onPressed: () {},
                       ),
-                      onPressed: () {
-                        removeOrDeleteTask(context, task);
-                      },
-                    ),
-                  ],
-                )
+                      //
+                      IconButton(
+                         tooltip: 'add to fav',
+                        icon: Icon(
+                          Icons.bookmark,
+                          size: 20,
+                          color: state.switchValue
+                              ? Constants.addButtonColorDark
+                              : Colors.grey,
+                        ),
+                        onPressed: () {},
+                      ),
+                      //
+                      IconButton(
+                         tooltip: 'move to bin',
+                        icon: Icon(
+                          Icons.delete,
+                          size: 20,
+                          color: state.switchValue
+                              ? Constants.addButtonColorDark
+                              : Colors.grey,
+                        ),
+                        onPressed: () {
+                          removeOrDeleteTask(context, task);
+                        },
+                      ),
+                    ],
+                  )
               ],
             ),
           ),
@@ -158,10 +207,9 @@ class TaskTile extends StatelessWidget {
 }
 
 void removeOrDeleteTask(BuildContext ctx, Task task) {
-
-  if(task.isDeleted == true){
-    ctx.read<TaskBloc>().add(DeleteTask(task: task));          
-  }else{
+  if (task.isDeleted == true) {
+    ctx.read<TaskBloc>().add(DeleteTask(task: task));
+  } else {
     ctx.read<TaskBloc>().add(RemoveTask(task: task));
   }
 }

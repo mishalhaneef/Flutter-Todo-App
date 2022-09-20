@@ -4,6 +4,8 @@ class Task extends Equatable {
   final String? id;
   final String title;
   final String description;
+  final String day;
+  final String time;
   bool? isDone;
   bool? isDeleted;
 
@@ -11,6 +13,8 @@ class Task extends Equatable {
     required this.id,
     required this.title,
     required this.description,
+    required this.day,
+    required this.time,
     this.isDone,
     this.isDeleted,
   }) {
@@ -22,6 +26,8 @@ class Task extends Equatable {
     String? id,
     String? title,
     String? description,
+    String? time,
+    String? day,
     bool? isDone,
     bool? isDeleted,
   }) {
@@ -29,6 +35,8 @@ class Task extends Equatable {
       id: id ?? this.id,
       title: title ?? this.title,
       description: description ?? this.description,
+      day: day ?? this.day,
+      time: time ?? this.time,
       isDone: isDone ?? this.isDone,
       isDeleted: isDeleted ?? this.isDeleted,
     );
@@ -40,6 +48,8 @@ class Task extends Equatable {
     result.addAll({'id': id});
     result.addAll({'title': title});
     result.addAll({'description': description});
+    result.addAll({'time': time});
+    result.addAll({'day': day});
     if (isDone != null) {
       result.addAll({'isDone': isDone});
     }
@@ -55,6 +65,8 @@ class Task extends Equatable {
       id: map['id'] ?? '',
       title: map['title'] ?? '',
       description: map['description'],
+      day: map['day'],
+      time: map['time'],
       isDone: map['isDone'],
       isDeleted: map['isDeleted'],
     );
@@ -65,6 +77,8 @@ class Task extends Equatable {
         id,
         title,
         description,
+        time,
+        day,
         isDeleted,
         isDone,
       ];

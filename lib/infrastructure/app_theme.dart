@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class AppThemes {
   static final appThemeData = {
     AppTheme.darkTheme: ThemeData(
+      fontFamily: 'Helvatica',
       dividerColor: Colors.transparent,
       scaffoldBackgroundColor: Constants.appDarkThemeColor,
       appBarTheme: const AppBarTheme(color: Constants.appDarkThemeColor),
@@ -33,6 +34,7 @@ class AppThemes {
     //
 
     AppTheme.lightTheme: ThemeData(
+        fontFamily: 'Helvatica',
       appBarTheme: const AppBarTheme(
         color: Color.fromARGB(255, 255, 255, 255),
       ),

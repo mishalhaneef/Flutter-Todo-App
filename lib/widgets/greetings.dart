@@ -1,4 +1,6 @@
 import 'package:bloc_change_text/core/constants.dart';
+import 'package:bloc_change_text/presentation/completed/completed_task.dart';
+import 'package:bloc_change_text/root_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../application/bloc_exports.dart';
@@ -9,7 +11,7 @@ class Greetings extends StatelessWidget {
     required this.greetingText,
   }) : super(key: key);
 
-  final greetingText;
+  final String greetingText;
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +26,16 @@ class Greetings extends StatelessWidget {
               const SizedBox(height: 10),
               BlocBuilder<TaskBloc, TaskState>(
                 builder: (context, state) {
-                  return Text(
-                    '${state.completedTasks.length} of ${state.pendingTasks.length + state.completedTasks.length} task completed',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: switchStateRoot.switchValue
-                            ? const Color(0xFF7F859A)
-                            : Colors.grey),
+                  return GestureDetector(
+                    onTap: () => RootScreen.selectedIndexNotifier.value = 1,
+                    child: Text(
+                      '${state.completedTasks.length} of ${state.pendingTasks.length + state.completedTasks.length} task completed',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: switchStateRoot.switchValue
+                              ? const Color(0xFF7F859A)
+                              : Colors.grey),
+                    ),
                   );
                 },
               ),

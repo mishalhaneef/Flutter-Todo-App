@@ -33,6 +33,8 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^8.1.1
   hydrated_bloc: ^8.1.0
+  intl: ^0.17.0
+  lottie: ^1.4.3
   path_provider: ^2.0.11
 
 dev_dependencies:
@@ -53,6 +55,9 @@ flutter:
     - assets/task_home.png
     - assets/completed_todo.png
     - assets/fav_todo.png
+    - assets/animations/todo.json
+    - assets/animations/56438-man-with-task-list.json
+    - assets/animations/todo_dark.json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see

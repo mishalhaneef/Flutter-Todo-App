@@ -25,12 +25,10 @@ class RootScreen extends StatelessWidget {
     return Scaffold(
       // common appbar widget
       appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(60),
-        child: AppBarWidget()
-      ),
+          preferredSize: Size.fromHeight(60), child: AppBarWidget()),
       // app's drawer
       drawer: const DrawerWidget(),
-      
+
       // root body
       body: ValueListenableBuilder(
         valueListenable: selectedIndexNotifier,
@@ -43,7 +41,6 @@ class RootScreen extends StatelessWidget {
         onPressed: () {
           showAddTodoPopup(context);
         },
-        
         child: const Icon(Icons.add),
       ),
       // bottom nav bar button

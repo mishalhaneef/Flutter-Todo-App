@@ -12,7 +12,9 @@ class AppBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SwitchBloc, SwitchState>(
       builder: (context, state) {
+        
         return AppBar(
+          
           actions: [
             IconButton(
               onPressed: () {
@@ -20,7 +22,8 @@ class AppBarWidget extends StatelessWidget {
               },
               icon: const Icon(Icons.add),
             ),
-            const SizedBox(width: 20)
+            
+            const SizedBox(width: 2)
           ],
           iconTheme: IconThemeData(
             color: state.switchValue 
