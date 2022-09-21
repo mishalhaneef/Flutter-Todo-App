@@ -13,47 +13,30 @@ class ActionButton extends StatelessWidget {
     Key? key,
     required this.type,
     required this.color,
+    required this.textColor,
+    required this.button,
+    this.onPressed,
   }) : super(key: key);
 
   final ActionButtonType type;
+  final Color textColor;
   final Color color;
+  final String button;
+  final VoidCallback? onPressed;
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {
-        if (type == ActionButtonType.cancel) {
-          Navigator.pop(context);
-        } else {
-          addTask(context);
-        }
-      },
+      onPressed: onPressed,
       style: ButtonStyle(
-        shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        )),
-        backgroundColor: type == ActionButtonType.cancel
-            ? MaterialStateProperty.all<Color>(color)
-            : MaterialStateProperty.all<Color>(color),
+          shape:
+              MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          )),
+          backgroundColor: MaterialStateProperty.all<Color>(color)),
+      child: Text(
+        button,
+        style: TextStyle(color: textColor),
       ),
-      child: Text(type == ActionButtonType.add ? 'Add' : 'Cancel'),
     );
   }
-}
-
-addTask(BuildContext context) {
-  final day = fetchToday();
-  final time = fetchTime();
-  Task task = Task(
-    title: titleController.text,
-    description: descriptionController.text,
-    day: day ,
-    time: time,
-    id: GUIDGen.generate(),
-  );
-  // the event class wiill trigger when this code run. and this code
-  // will run when the add button pressed with the required contents
-  // and it will send a task object to the event
-  context.read<TaskBloc>().add(AddTask(task: task));
-  clearControllers();
-  Navigator.pop(context);
 }

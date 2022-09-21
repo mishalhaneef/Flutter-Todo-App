@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class Constants {
   static const addButtonColor = Color(0xFF595959);
   static const cancelButtonColor = Color(0xFFBABABA);
-  static const cancelButtonColorDark = Color(0xF64483FF);
-  static const addButtonColorDark = Color(0xFF4C5483);
+  static const addButtonColorDark = Color(0xF64483FF);
+  static const cancelButtonColorDark = Color(0xFF4C5483);
 
   // Bottom nav
   /// light theme

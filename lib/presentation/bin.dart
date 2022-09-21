@@ -26,7 +26,20 @@ class Bin extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Recycle Bin', style: Constants.headingTextStyle),
+                Row(
+                  children: [
+                    const Text('Recycle Bin',
+                        style: Constants.headingTextStyle),
+                    Spacer(),
+                    IconButton(
+                      onPressed: () {
+                        context.read<TaskBloc>().add(ClearBin());
+                      },
+                      tooltip: 'Clear Bin',
+                      icon: Icon(Icons.delete),
+                    )
+                  ],
+                ),
                 const SizedBox(height: 10),
                 BlocBuilder<TaskBloc, TaskState>(
                   builder: (context, state) {

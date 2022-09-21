@@ -20,11 +20,7 @@ class TaskList extends StatelessWidget {
         shrinkWrap: true,
         itemCount: taskList.length,
         itemBuilder: (context, index) {
-          return TaskTile(
-            task: taskList[index],
-            isChecked: taskList[index].isDone,
-            taskList: taskList,
-          );
+          return TaskTile(task: taskList[index]);
         },
       ),
     );

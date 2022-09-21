@@ -1,16 +1,20 @@
 import 'package:bloc_change_text/core/constants.dart';
+import 'package:bloc_change_text/core/enums.dart';
+import 'package:bloc_change_text/core/global.dart';
 import 'package:bloc_change_text/domain/models/tasks.dart';
+import 'package:bloc_change_text/presentation/home/add_todo_screen.dart';
+import 'package:bloc_change_text/root_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../application/bloc_exports.dart';
 
 class TaskTile extends StatelessWidget {
-  const TaskTile(
-      {Key? key, required this.task, this.isChecked, required this.taskList})
-      : super(key: key);
+  const TaskTile({
+    Key? key,
+    required this.task,
+  }) : super(key: key);
   final Task task;
-  final isChecked;
-  final List<Task> taskList;
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SwitchBloc, SwitchState>(
@@ -33,7 +37,7 @@ class TaskTile extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15),
                 border: Border.all(
                   color: state.switchValue
-                      ? Constants.addButtonColorDark
+                      ? Constants.cancelButtonColorDark
                       : Colors.grey,
                 )),
             child: ExpansionTile(
@@ -43,29 +47,41 @@ class TaskTile extends StatelessWidget {
                 top: 5,
                 bottom: 5,
               ),
-              leading: BlocBuilder<SwitchBloc, SwitchState>(
-                builder: (context, state) {
-                  return Checkbox(
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(5.0))),
-                    splashRadius: 15,
-                    checkColor: state.switchValue ? Colors.black : Colors.white,
-                    fillColor: MaterialStateProperty.all<Color>(
-                      state.switchValue
-                          ? Colors.white
-                          : Constants.appThemeColor,
+              leading: RootScreen.selectedIndexNotifier.value == 2
+                  ? Checkbox(
+                      shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                      splashRadius: 15,
+                      checkColor:
+                          state.switchValue ? Colors.black : Colors.white,
+                      fillColor: MaterialStateProperty.all<Color>(
+                        state.switchValue
+                            ? Colors.white
+                            : Constants.appThemeColor,
+                      ),
+                      value: task.isDone,
+                      onChanged: (value) {},
+                    )
+                  : Checkbox(
+                      shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                      splashRadius: 15,
+                      checkColor:
+                          state.switchValue ? Colors.black : Colors.white,
+                      fillColor: MaterialStateProperty.all<Color>(
+                        state.switchValue
+                            ? Colors.white
+                            : Constants.appThemeColor,
+                      ),
+                      value: task.isDone,
+                      onChanged: task.isDeleted == false
+                          ? (bool? value) {
+                              context
+                                  .read<TaskBloc>()
+                                  .add(UpdateTask(task: task));
+                            }
+                          : null,
                     ),
-                    value: task.isDone,
-                    onChanged: task.isDeleted == false
-                        ? (bool? value) {
-                            context
-                                .read<TaskBloc>()
-                                .add(UpdateTask(task: task));
-                          }
-                        : null,
-                  );
-                },
-              ),
               title: Text.rich(
                 TextSpan(text: task.title),
                 overflow: TextOverflow.ellipsis,
@@ -127,30 +143,21 @@ class TaskTile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      IconButton(
-                        tooltip: 'Recover',
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.replay,
-                          color: state.switchValue
-                              ? Constants.addButtonColorDark
-                              : Colors.grey,
-                        ),
+                      TodoActionWidgets(
+                        icon: Icons.restore_from_trash_rounded,
+                        onPressed: () {
+                          context.read<TaskBloc>().add(RestoreTask(task: task));
+                        },
+                        state: state,
+                        text: 'Restore',
                       ),
                       //
-                     IconButton(
-                       tooltip: 'Delete Forever',
-                        icon: Icon(
-                          Icons.delete,
-                          size: 20,
-                          color: state.switchValue
-                              ? Constants.addButtonColorDark
-                              : Colors.grey,
-                        ),
-                        onPressed: () {
-                          removeOrDeleteTask(context, task);
-                        },
-                      ),
+                      TodoActionWidgets(
+                        state: state,
+                        icon: Icons.delete_forever_rounded,
+                        onPressed: () {},
+                        text: 'Delete Forever',
+                      )
                     ],
                   ),
                 if (task.isDeleted == false)
@@ -158,42 +165,44 @@ class TaskTile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      IconButton(
-                         tooltip: 'edit todo',
-                        icon: Icon(
-                          Icons.edit,
-                          size: 20,
-                          color: state.switchValue
-                              ? Constants.addButtonColorDark
-                              : Colors.grey,
-                        ),
-                        onPressed: () {},
+                      TodoActionWidgets(
+                        state: state,
+                        icon: Icons.edit,
+                        onPressed: () {
+                          titleController.text = task.title;
+                          descriptionController.text = task.description;
+                          showAddTodoPopup(
+                            context,
+                            type: PopupType.edit,
+                            oldTask: task,
+                          );
+                        },
+                        text: 'edit todo',
                       ),
                       //
-                      IconButton(
-                         tooltip: 'add to fav',
-                        icon: Icon(
-                          Icons.bookmark,
-                          size: 20,
-                          color: state.switchValue
-                              ? Constants.addButtonColorDark
-                              : Colors.grey,
-                        ),
-                        onPressed: () {},
+                      TodoActionWidgets(
+                        state: state,
+                        icon: task.isFavourite == false
+                            ? Icons.bookmark
+                            : Icons.bookmark_added,
+                        onPressed: () {
+                          print(task.isFavourite);
+                          context.read<TaskBloc>().add(
+                                MarkFavOrUnFavTask(task: task),
+                              );
+                        },
+                        text: task.isFavourite == false
+                            ? 'add to fav'
+                            : 'remove from fav',
                       ),
                       //
-                      IconButton(
-                         tooltip: 'move to bin',
-                        icon: Icon(
-                          Icons.delete,
-                          size: 20,
-                          color: state.switchValue
-                              ? Constants.addButtonColorDark
-                              : Colors.grey,
-                        ),
+                      TodoActionWidgets(
+                        state: state,
+                        icon: Icons.delete,
                         onPressed: () {
                           removeOrDeleteTask(context, task);
                         },
+                        text: 'move to bin',
                       ),
                     ],
                   )
@@ -202,6 +211,34 @@ class TaskTile extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class TodoActionWidgets extends StatelessWidget {
+  const TodoActionWidgets({
+    Key? key,
+    required this.state,
+    required this.icon,
+    required this.onPressed,
+    required this.text,
+  }) : super(key: key);
+
+  final SwitchState state;
+  final String text;
+  final VoidCallback? onPressed;
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      tooltip: text,
+      onPressed: onPressed,
+      icon: Icon(
+        icon,
+        color:
+            state.switchValue ? Constants.cancelButtonColorDark : Colors.grey,
+      ),
     );
   }
 }

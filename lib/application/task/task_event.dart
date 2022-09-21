@@ -27,6 +27,28 @@ class UpdateTask extends TaskEvent {
   List<Object> get props => [];
 }
 
+class MarkFavOrUnFavTask extends TaskEvent {
+  final Task task;
+  const MarkFavOrUnFavTask({
+    required this.task,
+  });
+
+  @override
+  List<Object> get props => [];
+}
+
+class EditTask extends TaskEvent {
+  final Task oldTask;
+  final Task newTask;
+  const EditTask({
+    required this.oldTask,
+    required this.newTask,
+  });
+
+  @override
+  List<Object> get props => [];
+}
+
 class DeleteTask extends TaskEvent {
   final Task task;
   const DeleteTask({
@@ -46,3 +68,15 @@ class RemoveTask extends TaskEvent {
   @override
   List<Object> get props => [];
 }
+
+class RestoreTask extends TaskEvent {
+  final Task task;
+  const RestoreTask({
+    required this.task,
+  });
+
+  @override
+  List<Object> get props => [];
+}
+
+class ClearBin extends TaskEvent {}

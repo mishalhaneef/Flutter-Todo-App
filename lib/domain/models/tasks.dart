@@ -6,6 +6,7 @@ class Task extends Equatable {
   final String description;
   final String day;
   final String time;
+  bool? isFavourite;
   bool? isDone;
   bool? isDeleted;
 
@@ -15,11 +16,13 @@ class Task extends Equatable {
     required this.description,
     required this.day,
     required this.time,
+    this.isFavourite,
     this.isDone,
     this.isDeleted,
   }) {
     isDone = isDone ?? false;
     isDeleted = isDeleted ?? false;
+    isFavourite = isFavourite ?? false;
   }
 
   Task copyWith({
@@ -30,6 +33,7 @@ class Task extends Equatable {
     String? day,
     bool? isDone,
     bool? isDeleted,
+    bool? isFavourite,
   }) {
     return Task(
       id: id ?? this.id,
@@ -37,6 +41,7 @@ class Task extends Equatable {
       description: description ?? this.description,
       day: day ?? this.day,
       time: time ?? this.time,
+      isFavourite: isFavourite ?? this.isFavourite,
       isDone: isDone ?? this.isDone,
       isDeleted: isDeleted ?? this.isDeleted,
     );
@@ -50,6 +55,9 @@ class Task extends Equatable {
     result.addAll({'description': description});
     result.addAll({'time': time});
     result.addAll({'day': day});
+    if (isFavourite != null) {
+      result.addAll({'isFavourite': isFavourite});
+    }
     if (isDone != null) {
       result.addAll({'isDone': isDone});
     }
@@ -67,6 +75,7 @@ class Task extends Equatable {
       description: map['description'],
       day: map['day'],
       time: map['time'],
+      isFavourite: map['isFavourite'],
       isDone: map['isDone'],
       isDeleted: map['isDeleted'],
     );
@@ -79,11 +88,11 @@ class Task extends Equatable {
         description,
         time,
         day,
+        isFavourite,
         isDeleted,
         isDone,
       ];
 
   // String toJson() => json.encode(toMap());
-
   // factory Task.fromJson(String source) => Task.fromMap(json.decode(source));
 }
