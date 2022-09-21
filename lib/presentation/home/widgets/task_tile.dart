@@ -1,9 +1,13 @@
+import 'dart:ui';
+
 import 'package:bloc_change_text/core/constants.dart';
 import 'package:bloc_change_text/core/enums.dart';
 import 'package:bloc_change_text/core/global.dart';
 import 'package:bloc_change_text/domain/models/tasks.dart';
 import 'package:bloc_change_text/presentation/home/add_todo_screen.dart';
 import 'package:bloc_change_text/root_screen.dart';
+import 'package:bloc_change_text/widgets/showdialogue.dart';
+import 'package:bloc_change_text/widgets/snackbars.dart';
 import 'package:flutter/material.dart';
 
 import '../../../application/bloc_exports.dart';
@@ -26,7 +30,7 @@ class TaskTile extends StatelessWidget {
             child: ExpansionTile(
               tilePadding: tilePadding(),
               leading: RootScreen.selectedIndexNotifier.value == 2
-              // check box
+                  // check box
                   ? TodoBox(task: task, state: state)
                   : TodoBox(
                       task: task,
@@ -39,7 +43,7 @@ class TaskTile extends StatelessWidget {
                             }
                           : null,
                     ),
-                    // title text
+              // title text
               title: Text.rich(
                 TextSpan(text: task.title),
                 overflow: TextOverflow.ellipsis,
@@ -149,6 +153,9 @@ class TaskTile extends StatelessWidget {
                           context.read<TaskBloc>().add(
                                 MarkFavOrUnFavTask(task: task),
                               );
+                          task.isFavourite == false
+                              ? snackBar('Added to favourite', context)
+                              : snackBar('Removed from Favourite', context);
                         },
                         text: task.isFavourite == false
                             ? 'add to fav'
@@ -159,7 +166,17 @@ class TaskTile extends StatelessWidget {
                         state: state,
                         icon: Icons.delete,
                         onPressed: () {
-                          removeOrDeleteTask(context, task);
+                          dialogueCard(
+                            context: context,
+                            description:
+                                'Are you sure that you want to delete this task?',
+                            head: 'Delete Task',
+                            onPressed: () {
+                              removeOrDeleteTask(context, task);
+                              Navigator.pop(context);
+                            },
+                            state: state,
+                          );
                         },
                         text: 'move to bin',
                       ),
@@ -259,7 +276,9 @@ class TodoActionWidgets extends StatelessWidget {
 void removeOrDeleteTask(BuildContext ctx, Task task) {
   if (task.isDeleted == true) {
     ctx.read<TaskBloc>().add(DeleteTask(task: task));
+    snackBar('Moved to bin', ctx);
   } else {
     ctx.read<TaskBloc>().add(RemoveTask(task: task));
+    snackBar('Deleted Succesfully', ctx);
   }
 }

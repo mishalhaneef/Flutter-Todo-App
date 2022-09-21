@@ -19,6 +19,10 @@ class AppThemes {
         backgroundColor: Color(0xFF4483FF),
         foregroundColor: Color(0xFFD8DEFF),
       ),
+      snackBarTheme: const SnackBarThemeData(
+          actionTextColor: Colors.white,
+          disabledActionTextColor: Colors.white,
+          backgroundColor: Constants.cancelButtonColorDark),
       cardColor: const Color(0xFF1B1E2F),
       textButtonTheme: TextButtonThemeData(
         style: ButtonStyle(

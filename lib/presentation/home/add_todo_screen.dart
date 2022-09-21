@@ -4,6 +4,7 @@ import 'package:bloc_change_text/core/global.dart';
 import 'package:bloc_change_text/domain/models/tasks.dart';
 import 'package:bloc_change_text/infrastructure/guid_gen.dart';
 import 'package:bloc_change_text/presentation/home/widgets/todo_textfield.dart';
+import 'package:bloc_change_text/widgets/snackbars.dart';
 import 'package:flutter/material.dart';
 
 import '../../application/bloc_exports.dart';
@@ -117,6 +118,7 @@ addTask(BuildContext context) {
   context.read<TaskBloc>().add(AddTask(task: task));
   clearControllers();
   Navigator.pop(context);
+  snackBar('Added Succesfully', context);
 }
 
 updateTask(BuildContext context, Task oldTask) {
@@ -142,4 +144,5 @@ updateTask(BuildContext context, Task oldTask) {
       );
   clearControllers();
   Navigator.pop(context);
+  snackBar('Updated Succesfully', context);
 }

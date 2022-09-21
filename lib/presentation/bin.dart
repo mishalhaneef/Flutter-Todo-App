@@ -1,5 +1,6 @@
 import 'package:bloc_change_text/core/constants.dart';
 import 'package:bloc_change_text/presentation/home/widgets/task_list.dart';
+import 'package:bloc_change_text/widgets/showdialogue.dart';
 import 'package:flutter/material.dart';
 
 import '../application/bloc_exports.dart';
@@ -30,14 +31,26 @@ class Bin extends StatelessWidget {
                   children: [
                     const Text('Recycle Bin',
                         style: Constants.headingTextStyle),
-                    Spacer(),
-                    IconButton(
-                      onPressed: () {
-                        context.read<TaskBloc>().add(ClearBin());
-                      },
-                      tooltip: 'Clear Bin',
-                      icon: Icon(Icons.delete),
-                    )
+                    const Spacer(),
+                    BlocBuilder<SwitchBloc, SwitchState>(
+                        builder: (context, state) {
+                      return IconButton(
+                        onPressed: () {
+                          dialogueCard(
+                            context: context,
+                            description: 'Are you sure ?',
+                            head: 'Clear bin',
+                            onPressed: () {
+                              context.read<TaskBloc>().add(ClearBin());
+                              Navigator.of(context).pop();
+                            },
+                            state: state,
+                          );
+                        },
+                        tooltip: 'Clear Bin',
+                        icon: const Icon(Icons.delete),
+                      );
+                    })
                   ],
                 ),
                 const SizedBox(height: 10),
