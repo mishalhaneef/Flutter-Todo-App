@@ -2,6 +2,8 @@ import 'package:bloc_change_text/core/constants.dart';
 import 'package:bloc_change_text/core/enums.dart';
 import 'package:flutter/material.dart';
 
+// Dark theme
+
 class AppThemes {
   static final appThemeData = {
     AppTheme.darkTheme: ThemeData(
@@ -30,11 +32,10 @@ class AppThemes {
           backgroundColor: Colors.grey, unselectedItemColor: Colors.white),
     ),
 
-    //
-    //
+    // Light theme
 
     AppTheme.lightTheme: ThemeData(
-        fontFamily: 'Helvatica',
+      fontFamily: 'Helvatica',
       appBarTheme: const AppBarTheme(
         color: Color.fromARGB(255, 255, 255, 255),
       ),

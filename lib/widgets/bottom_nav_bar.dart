@@ -26,44 +26,23 @@ class BottomNavBar extends StatelessWidget {
               items: [
                 BottomNavigationBarItem(
                   icon: Image(
-                    image: const AssetImage(Constants.todoHome),
-                    height: 40,
-                    color: value == 0
-                        ? state.switchValue
-                            ? Constants.selectedBottomNavColorDark
-                            : Constants.selectedBottomNavColor
-                        : state.switchValue
-                            ? Constants.unSelectedBottomNavColorDark
-                            : Constants.unSelectedBottomNavColor,
-                  ),
+                      image: const AssetImage(Constants.todoHome),
+                      height: 40,
+                      color: navColor(state, value, 0)),
                   label: '',
                 ),
                 BottomNavigationBarItem(
                   icon: Image(
-                    image: const AssetImage(Constants.completedTodo),
-                    height: 35,
-                    color: value == 1
-                        ? state.switchValue
-                            ? Constants.selectedBottomNavColorDark
-                            : Constants.selectedBottomNavColor
-                        : state.switchValue
-                            ? Constants.unSelectedBottomNavColorDark
-                            : Constants.unSelectedBottomNavColor,
-                  ),
+                      image: const AssetImage(Constants.completedTodo),
+                      height: 35,
+                      color: navColor(state, value, 1)),
                   label: '',
                 ),
                 BottomNavigationBarItem(
                   icon: Image(
-                    image: const AssetImage(Constants.favTodo),
-                    height: 35,
-                    color: value == 2
-                        ? state.switchValue
-                            ? Constants.selectedBottomNavColorDark
-                            : Constants.selectedBottomNavColor
-                        : state.switchValue
-                            ? Constants.unSelectedBottomNavColorDark
-                            : Constants.unSelectedBottomNavColor,
-                  ),
+                      image: const AssetImage(Constants.favTodo),
+                      height: 35,
+                      color: navColor(state, value, 2)),
                   label: '',
                 ),
               ],
@@ -76,5 +55,21 @@ class BottomNavBar extends StatelessWidget {
       },
       valueListenable: selectedIndexNotifier,
     );
+  }
+}
+
+Color navColor(SwitchState state, value, index) {
+  if (value == index) {
+    if (state.switchValue == true) {
+      return Constants.selectedBottomNavColorDark;
+    } else {
+      return Constants.selectedBottomNavColor;
+    }
+  } else {
+    if (state.switchValue) {
+      return Constants.unSelectedBottomNavColorDark;
+    } else {
+      return Constants.unSelectedBottomNavColor;
+    }
   }
 }

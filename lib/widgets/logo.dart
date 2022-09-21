@@ -15,10 +15,11 @@ class DoItLogoWidget extends StatelessWidget {
           children: [
             Text('DO ',
                 style: TextStyle(
-                    fontSize: 25,
-                    color: state.switchValue
-                        ? Color.fromARGB(255, 138, 138, 138)
-                        : Colors.black)),
+                  fontSize: 25,
+                  color: state.switchValue
+                      ? const Color.fromARGB(255, 138, 138, 138)
+                      : Colors.black,
+                )),
             Text(
               'IT',
               style: TextStyle(

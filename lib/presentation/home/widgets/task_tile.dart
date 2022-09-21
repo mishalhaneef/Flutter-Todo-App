@@ -22,58 +22,15 @@ class TaskTile extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.only(right: 30, left: 30, bottom: 20),
           child: Container(
-            decoration: BoxDecoration(
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black,
-                    offset: Offset(0.0, 0.0),
-                    blurRadius: 18.0,
-                    spreadRadius: -15,
-                  ), //BoxShadow
-                ],
-                color: state.switchValue
-                    ? Constants.appDarkThemeColor
-                    : Colors.white,
-                borderRadius: BorderRadius.circular(15),
-                border: Border.all(
-                  color: state.switchValue
-                      ? Constants.cancelButtonColorDark
-                      : Colors.grey,
-                )),
+            decoration: boxDecoration(state),
             child: ExpansionTile(
-              tilePadding: const EdgeInsets.only(
-                left: 5,
-                right: 20,
-                top: 5,
-                bottom: 5,
-              ),
+              tilePadding: tilePadding(),
               leading: RootScreen.selectedIndexNotifier.value == 2
-                  ? Checkbox(
-                      shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5.0))),
-                      splashRadius: 15,
-                      checkColor:
-                          state.switchValue ? Colors.black : Colors.white,
-                      fillColor: MaterialStateProperty.all<Color>(
-                        state.switchValue
-                            ? Colors.white
-                            : Constants.appThemeColor,
-                      ),
-                      value: task.isDone,
-                      onChanged: (value) {},
-                    )
-                  : Checkbox(
-                      shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5.0))),
-                      splashRadius: 15,
-                      checkColor:
-                          state.switchValue ? Colors.black : Colors.white,
-                      fillColor: MaterialStateProperty.all<Color>(
-                        state.switchValue
-                            ? Colors.white
-                            : Constants.appThemeColor,
-                      ),
-                      value: task.isDone,
+              // check box
+                  ? TodoBox(task: task, state: state)
+                  : TodoBox(
+                      task: task,
+                      state: state,
                       onChanged: task.isDeleted == false
                           ? (bool? value) {
                               context
@@ -82,6 +39,7 @@ class TaskTile extends StatelessWidget {
                             }
                           : null,
                     ),
+                    // title text
               title: Text.rich(
                 TextSpan(text: task.title),
                 overflow: TextOverflow.ellipsis,
@@ -101,6 +59,7 @@ class TaskTile extends StatelessWidget {
                           : Colors.black,
                 ),
               ),
+              // description
               subtitle: Text('${task.day} | ${task.time}',
                   // '${todo.day} | ${todo.time}',
                   style: TextStyle(
@@ -114,7 +73,7 @@ class TaskTile extends StatelessWidget {
                             ? const Color(0xFF656A85)
                             : const Color.fromARGB(255, 92, 92, 92),
                   )),
-              children: <Widget>[
+              children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 60),
                   child: ListTile(
@@ -211,6 +170,60 @@ class TaskTile extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  EdgeInsets tilePadding() {
+    return const EdgeInsets.only(
+      left: 5,
+      right: 20,
+      top: 5,
+      bottom: 5,
+    );
+  }
+
+  BoxDecoration boxDecoration(SwitchState state) {
+    return BoxDecoration(
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black,
+            offset: Offset(0.0, 0.0),
+            blurRadius: 18.0,
+            spreadRadius: -15,
+          ), //BoxShadow
+        ],
+        color: state.switchValue ? Constants.appDarkThemeColor : Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(
+          color:
+              state.switchValue ? Constants.cancelButtonColorDark : Colors.grey,
+        ));
+  }
+}
+
+class TodoBox extends StatelessWidget {
+  const TodoBox({
+    Key? key,
+    required this.task,
+    required this.state,
+    this.onChanged,
+  }) : super(key: key);
+
+  final Task task;
+  final SwitchState state;
+  final Function(bool?)? onChanged;
+  @override
+  Widget build(BuildContext context) {
+    return Checkbox(
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(5.0))),
+      splashRadius: 15,
+      checkColor: state.switchValue ? Colors.black : Colors.white,
+      fillColor: MaterialStateProperty.all<Color>(
+        state.switchValue ? Colors.white : Constants.appThemeColor,
+      ),
+      value: task.isDone,
+      onChanged: onChanged,
     );
   }
 }

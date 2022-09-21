@@ -35,12 +35,6 @@ class TextFieldTodo extends StatelessWidget {
             ),
           ],
         ),
-        // border: OutlineInputBorder(
-        //   borderSide: BorderSide(
-        //     color: color
-        //   ),
-        //   borderRadius: BorderRadius.circular(15),
-        // ),
       ),
     );
   }

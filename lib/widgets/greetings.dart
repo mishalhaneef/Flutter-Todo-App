@@ -1,5 +1,4 @@
 import 'package:bloc_change_text/core/constants.dart';
-import 'package:bloc_change_text/presentation/completed/completed_task.dart';
 import 'package:bloc_change_text/root_screen.dart';
 import 'package:flutter/material.dart';
 

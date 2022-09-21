@@ -1,6 +1,5 @@
 import 'package:bloc_change_text/core/enums.dart';
 import 'package:bloc_change_text/infrastructure/app_theme.dart';
-import 'package:bloc_change_text/infrastructure/routers.dart';
 import 'package:bloc_change_text/root_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
@@ -24,17 +23,14 @@ void main() async {
   // that's what this runZoned function do
   HydratedBlocOverrides.runZoned(
     () => runApp(
-      MyApp(
-        routers: AppRouters(),
-      ),
+      const MyApp(),
     ),
     storage: storage,
   );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key, required this.routers}) : super(key: key);
-  final AppRouters routers;
+  const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -45,15 +41,12 @@ class MyApp extends StatelessWidget {
       child: BlocBuilder<SwitchBloc, SwitchState>(
         builder: (context, state) {
           return MaterialApp(
-            
             debugShowCheckedModeBanner: false,
             title: 'Todo',
             theme: state.switchValue
                 ? AppThemes.appThemeData[AppTheme.darkTheme]
                 : AppThemes.appThemeData[AppTheme.lightTheme],
-                
             home: const RootScreen(),
-            onGenerateRoute: routers.onGenerateRoute,
           );
         },
       ),

@@ -92,7 +92,9 @@ class DrawerTile extends StatelessWidget {
         height: 24,
         width: 24,
         decoration: BoxDecoration(
-            color: Color(0XFFFFCC9C), borderRadius: BorderRadius.circular(6)),
+          color: const Color(0XFFFFCC9C),
+          borderRadius: BorderRadius.circular(6),
+        ),
         child: Center(
           child: Text(
             count,
@@ -106,10 +108,10 @@ class DrawerTile extends StatelessWidget {
       onTap: () {
         if (routeName == RootScreen.id) {
           Navigator.pop(context);
-          // Navigator.of(context)
-          //     .pushNamedAndRemoveUntil(routeName, (route) => false);
         } else {
-          Navigator.of(context).pushNamed(routeName);
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => const Bin(),
+          ));
         }
       },
     );

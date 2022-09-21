@@ -44,6 +44,10 @@ class TaskBloc extends HydratedBloc<TaskEvent, TaskState> {
     List<Task> favouriteTasks = state.favouriteTasks;
 
     if (task.isDone == false) {
+      // need to update also in favourite page too
+      /// steps
+      /// * removing task from list
+      /// * add the same task again with isDone instance as done
       if (task.isFavourite == false) {
         pendingTasks = List.from(pendingTasks)..remove(task);
         completedTasks = List.from(completedTasks)
