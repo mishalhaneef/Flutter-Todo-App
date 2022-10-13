@@ -1,5 +1,7 @@
 # ToDo app Flutter
 
+Simple todo app built in flutter with bloc state management
+
 # Techstacks I used
 
 - Flutter - Mobile Development sdk by google
