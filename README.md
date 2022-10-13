@@ -1,16 +1,31 @@
-# bloc_change_text
+# ToDo app Flutter
 
-A new Flutter project.
+# Techstacks I used
 
-## Getting Started
+- Flutter - Mobile Development sdk by google
+- Bloc statemanagement - easy to implement and code
+- Bloc Storage (Hive)
 
-This project is a starting point for a Flutter application.
+## Features 
 
-A few resources to get you started if this is your first Flutter project:
+- Add todo
+- Can add todo to favorite section
+- Light and Dark mode theme switching
+- Bin (you can restore deleted todos)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Run The Project
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Go to terminal and run the command
+> code .
+
+> flutter emulators --launch < emulator id >
+
+> flutter run
+
+### Install and test the application
+
+- To install on emulator from your IDE try this command
+> flutter build apk --split-per-abi    
+> flutter install 
+
+Or try on your physical device. download from [here](https://drive.google.com/file/d/1Ox7W-V7VZsGzrjIFLV40Ni8CABg_rqIh/view?usp=sharing)
