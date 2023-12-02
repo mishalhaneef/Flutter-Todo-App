@@ -1,33 +1,62 @@
-# ToDo app Flutter
 
-Simple todo app built in flutter with bloc state management
+# ToDo App for Flutter
 
-# Techstacks I used
+A simple yet powerful ToDo app built using Flutter, featuring Bloc state management and Bloc Storage with Hive.
 
-- Flutter - Mobile Development sdk by google
-- Bloc statemanagement - easy to implement and code
-- Bloc Storage (Hive)
+## Tech Stacks
 
-## Features 
+- **Flutter:** Google's SDK for mobile development.
+- **Bloc State Management:** Efficient and easy-to-implement state management.
+- **Bloc Storage (Hive):** Storage solution integrated with Bloc for seamless data persistence.
 
-- Add todo
-- Can add todo to favorite section
-- Light and Dark mode theme switching
-- Bin (you can restore deleted todos)
+## Features
+
+- **Add ToDo:**
+  - Easily create and manage tasks with a streamlined interface.
+
+- **Favorite Section:**
+  - Mark important tasks as favorites for quick access.
+
+- **Theme Switching:**
+  - Seamlessly toggle between Light and Dark modes for personalized user experience.
+
+- **Recycle Bin:**
+  - Restore deleted todos from the Bin, ensuring you never lose important tasks.
 
 ## Run The Project
 
-Go to terminal and run the command
-> code .
+Follow these steps to run the project:
 
-> flutter emulators --launch < emulator id >
+1. Open your terminal and run the command:
+   ```bash
+   code .
+   ```
 
-> flutter run
+2. Launch your preferred emulator using:
+   ```bash
+   flutter emulators --launch <emulator_id>
+   ```
 
-### Install and test the application
+3. Run the project with:
+   ```bash
+   flutter run
+   ```
 
-- To install on emulator from your IDE try this command
-> flutter build apk --split-per-abi    
-> flutter install 
+### Installation and Testing
 
-Or try on your physical device. download from [here](https://drive.google.com/file/d/1Ox7W-V7VZsGzrjIFLV40Ni8CABg_rqIh/view?usp=sharing)
+To install on an emulator from your IDE, use the following commands:
+
+```bash
+flutter build apk --split-per-abi
+flutter install
+```
+
+Alternatively, download and install the app on your physical device by [clicking here](https://drive.google.com/file/d/1Ox7W-V7VZsGzrjIFLV40Ni8CABg_rqIh/view?usp=sharing).
+
+## Issues and Contributions
+
+If you encounter any issues or have suggestions for improvement, please feel free to open an issue or contribute to the project. We welcome your feedback and collaboration!
+
+## License
+
+This project is licensed under the [MIT License](LICENSE) - see the [LICENSE](LICENSE) file for details.

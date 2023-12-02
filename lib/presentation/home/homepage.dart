@@ -22,7 +22,12 @@ class HomePage extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Greetings(greetingText: day == 'Friday' ? 'Weekend 🎉' : '$day :)'),
+            Greetings(
+                greetingText: day == 'Friday'
+                    ? 'Weekend 🎉'
+                    : day == 'Sunday'
+                        ? '$day ;)'
+                        : '$day :)'),
             if (taskList.isEmpty)
               Padding(
                 padding: EdgeInsets.all(120),
@@ -39,9 +44,9 @@ class HomePage extends StatelessWidget {
                         Text(
                           'Add New Todo',
                           style: TextStyle(
-                            color: state.switchValue
-                            ? const Color(0xFF6A7097)
-                            : const Color(0xFFE2E5EF),
+                              color: state.switchValue
+                                  ? const Color(0xFF6A7097)
+                                  : const Color(0xFFE2E5EF),
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Helvatica'),
