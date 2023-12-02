@@ -56,7 +56,3 @@ Alternatively, download and install the app on your physical device by [clicking
 ## Issues and Contributions
 
 If you encounter any issues or have suggestions for improvement, please feel free to open an issue or contribute to the project. We welcome your feedback and collaboration!
-
-## License
-
-This project is licensed under the [MIT License](LICENSE) - see the [LICENSE](LICENSE) file for details.
