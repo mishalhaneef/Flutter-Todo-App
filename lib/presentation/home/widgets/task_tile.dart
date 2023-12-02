@@ -1,12 +1,6 @@
-import 'dart:ui';
-
 import 'package:bloc_change_text/core/constants.dart';
-import 'package:bloc_change_text/core/enums.dart';
-import 'package:bloc_change_text/core/global.dart';
 import 'package:bloc_change_text/domain/models/tasks.dart';
-import 'package:bloc_change_text/presentation/home/add_todo_screen.dart';
 import 'package:bloc_change_text/root_screen.dart';
-import 'package:bloc_change_text/widgets/showdialogue.dart';
 import 'package:bloc_change_text/widgets/snackbars.dart';
 import 'package:flutter/material.dart';
 
@@ -77,8 +71,7 @@ class TaskTile extends StatelessWidget {
                             ? const Color(0xFF656A85)
                             : const Color.fromARGB(255, 92, 92, 92),
                   )),
-              children: [
-              ],
+              children: [],
             ),
           ),
         );

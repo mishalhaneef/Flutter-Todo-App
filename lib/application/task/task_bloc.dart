@@ -1,7 +1,6 @@
 import 'package:bloc_change_text/application/bloc_exports.dart';
 import 'package:bloc_change_text/domain/models/tasks.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 part 'task_event.dart';
 part 'task_state.dart';
 
