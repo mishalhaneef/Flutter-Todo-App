@@ -1,4 +1,3 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../bloc_exports.dart';
@@ -20,12 +19,12 @@ class SwitchBloc extends HydratedBloc<SwitchEvent, SwitchState> {
       );
     });
   }
-  
+
   @override
   SwitchState? fromJson(Map<String, dynamic> json) {
     return SwitchState.fromMap(json);
   }
-  
+
   @override
   Map<String, dynamic>? toJson(SwitchState state) {
     return state.toMap();
